@@ -13,6 +13,8 @@ A filtered JSON copy of the Microsoft Graph v1.0 OpenAPI description, for app-on
 
 Removed paths need a signed-in user, are out of scope for administration, are retired, or duplicate a path that remains.
 
+Microsoft marks `@odata.type` required on every entity schema. Graph needs it only to choose a derived type, so this copy drops that one requirement and request bodies validate without it.
+
 ## Rebuild
 
 ```sh

@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url"
 import yaml from "js-yaml"
 
 const here = dirname(fileURLToPath(import.meta.url))
-const config = JSON.parse(readFileSync(join(here, "..", "exclusions.json"), "utf8"))
+const config = JSON.parse(readFileSync(join(here, "..", "spec", "exclusions.json"), "utf8"))
 const [out, local] = process.argv.slice(2)
 if (!out) throw new Error("Usage: trim-spec.mjs <out.json> [local-openapi.yaml]")
 
@@ -43,6 +43,22 @@ while (queue.length > 0) {
   queue.push(...refs(value))
 }
 
+// Microsoft marks @odata.type required on every entity, so request bodies fail validation
+// unless agents send it. Graph itself only needs it to pick a derived type.
+let relaxed = 0
+const relax = (value) => {
+  if (Array.isArray(value)) return value.forEach(relax)
+  if (value === null || typeof value !== "object") return
+  if (Array.isArray(value.required) && value.required.includes("@odata.type")) {
+    value.required = value.required.filter((key) => key !== "@odata.type")
+    if (value.required.length === 0) delete value.required
+    relaxed++
+  }
+  Object.values(value).forEach(relax)
+}
+relax(components)
+relax(paths)
+
 const json = JSON.stringify({ ...document, paths, components })
 writeFileSync(out, json)
 console.log(
@@ -51,6 +67,7 @@ console.log(
     sourceOperations: operations(document.paths),
     operations: operations(paths),
     paths: Object.keys(paths).length,
+    relaxedOdataType: relaxed,
     bytes: Buffer.byteLength(json),
     sha256: createHash("sha256").update(json).digest("hex"),
   }),
