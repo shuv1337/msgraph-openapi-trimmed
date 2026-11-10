@@ -123,7 +123,6 @@
     "/groups/{group-id}/events",
     "/groups/{group-id}/calendarView",
     "/applications",
-    "/applications/{application-id}/addPassword",
     "/servicePrincipals",
     "/servicePrincipals/{servicePrincipal-id}/addTokenSigningCertificate",
     "/servicePrincipals/{servicePrincipal-id}/appRoleAssignments",
@@ -181,6 +180,30 @@
           "path": "/users/{user-id}/authentication/temporaryAccessPassMethods"
         }
       ]
+    },
+    {
+      "why": "Returns a new password, client secret or plaintext setting value in the response, which would put a credential in the agent's context. Passwords go through manage.identity.resetPassword as one-time links; app secrets will get the same treatment.",
+      "operations": [
+        {
+          "method": "post",
+          "path": "/users/{user-id}/authentication/methods/{authenticationMethod-id}/resetPassword"
+        },
+        {
+          "method": "post",
+          "path": "/applications/{application-id}/addPassword"
+        },
+        {
+          "method": "post",
+          "path": "/servicePrincipals/{servicePrincipal-id}/addPassword"
+        },
+        {
+          "method": "get",
+          "path": "/deviceManagement/deviceConfigurations/{deviceConfiguration-id}/getOmaSettingPlainTextValue(secretReferenceValueId='{secretReferenceValueId}')"
+        }
+      ]
     }
+  ],
+  "notes": [
+    "2026-11-10: /applications/{application-id}/addPassword left mustKeep. Secret rotation (Phase 4) will be a hand-written tool that issues the secret as a one-time link, like restoreAccount and resetPassword."
   ]
 }
