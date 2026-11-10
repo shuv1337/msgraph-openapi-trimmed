@@ -19,10 +19,23 @@ const document = yaml.load(text, { schema: yaml.JSON_SCHEMA })
 
 const verbs = ["get", "post", "put", "patch", "delete"]
 const operations = (paths) => Object.values(paths).reduce((n, item) => n + verbs.filter((v) => v in item).length, 0)
+const sourceOperations = operations(document.paths)
 const patterns = config.exclude.flatMap((group) => group.patterns.map((source) => new RegExp(source)))
 const paths = Object.fromEntries(
   Object.entries(document.paths).filter(([key]) => !patterns.some((pattern) => pattern.test(key))),
 )
+
+// Drop single operations that would hand a fresh credential to the caller.
+let removedOperations = 0
+for (const group of config.excludeOperations ?? []) {
+  for (const { method, path } of group.operations) {
+    const item = paths[path]
+    if (item === undefined || !(method in item)) throw new Error(`excludeOperations: ${method.toUpperCase()} ${path} is not in the spec`)
+    delete item[method]
+    removedOperations++
+    if (!verbs.some((verb) => verb in item)) delete paths[path]
+  }
+}
 
 const lost = config.mustKeep.filter((key) => !(key in paths))
 if (lost.length > 0) throw new Error(`mustKeep paths are missing: ${lost.join(", ")}`)
@@ -64,10 +77,11 @@ writeFileSync(out, json)
 console.log(
   JSON.stringify({
     sourceCommit: commit,
-    sourceOperations: operations(document.paths),
+    sourceOperations,
     operations: operations(paths),
     paths: Object.keys(paths).length,
     relaxedOdataType: relaxed,
+    removedOperations,
     bytes: Buffer.byteLength(json),
     sha256: createHash("sha256").update(json).digest("hex"),
   }),

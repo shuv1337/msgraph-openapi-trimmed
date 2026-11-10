@@ -5,30 +5,182 @@
     "path": "openapi/v1.0/openapi.yaml"
   },
   "exclude": [
-    { "why": "Needs a signed-in user; this spec serves app-only callers", "patterns": ["^/me(/|$|\\()", "filterByCurrentUser\\(on="] },
-    { "why": "List operations accept $count", "patterns": ["/\\$count$"] },
-    { "why": "Excel cell, chart and table editing; no admin use", "patterns": ["/workbook(?=/|\\(|$)"] },
-    { "why": "Copies of /sites and /teams, which remain", "patterns": ["^/groups/\\{group-id\\}/sites/\\{site-id\\}(/|$)", "^/groups/\\{group-id\\}/team/", "^/teams/\\{team-id\\}/primaryChannel/"] },
-    { "why": "OneNote editing; no admin use", "patterns": ["^/groups/\\{group-id\\}/onenote(/|$)", "^/sites/\\{site-id\\}(/getByPath\\(path='\\{path\\}'\\))?/onenote(/|$)", "^/users/\\{user-id\\}/onenote(/|$)"] },
-    { "why": "Plural copy of the default termStore paths, which remain", "patterns": ["^/sites/\\{site-id\\}(/getByPath\\(path='\\{path\\}'\\))?/termStores(/|$)"] },
-    { "why": "Nested entitlement management copies; top-level paths remain", "patterns": ["^/identityGovernance/entitlementManagement/.*/resource/", "^/identityGovernance/entitlementManagement/resourceRequests/\\{[^}]+\\}/catalog/", "^/identityGovernance/entitlementManagement/(catalogs|resourceEnvironments)/\\{[^}]+\\}/resources/\\{[^}]+\\}/(roles|scopes|uploadSessions|environment|externalOriginResourceConnector|refresh)(/|$)", "^/identityGovernance/catalogs(/|$)"] },
-    { "why": "Nested lifecycle workflow copies; canonical task paths remain", "patterns": ["^/identityGovernance/lifecycleWorkflows/.*/taskProcessingResults/\\{taskProcessingResult-id\\}/(subject|task)(/|$)", "^/identityGovernance/lifecycleWorkflows/.*/taskReports/\\{taskReport-id\\}/(task|taskDefinition|taskProcessingResults)(/|$)"] },
-    { "why": "Deep user navigation; read the id, then use /users/{id}", "patterns": ["/(createdByUser|lastModifiedByUser)(/|$)", "/(createdBy|lastModifiedBy)/"] },
-    { "why": "Out of scope for tenant administration", "patterns": ["^/education(/|$)", "^/employeeExperience(/|$)", "^/users/\\{user-id\\}/employeeExperience(/|$)", "^/users/\\{user-id\\}/(todo|activities|insights|cloudClipboard)(/|$)"] },
-    { "why": "Retired, deprecated or separately licensed", "patterns": ["^/deviceAppManagement/(mdm)?[Ww]indowsInformationProtectionPolicies|^/deviceManagement/windowsInformationProtection(AppLearning|NetworkLearning)Summaries", "^/security/threatIntelligence/(articles|articleIndicators)(/|$)", "^/security/alerts(/|$)", "^/reports/getSkypeForBusiness", "^/identityProviders(/|$)"] },
-    { "why": "Aliases of paths that remain", "patterns": ["^/policies/conditionalAccessPolicies(/|$)", "^/identity/conditionalAccess/authenticationStrength/policies(/|$)", "^/users\\(userPrincipalName=", "^/devices\\(deviceId=", "/assignedUsers\\(userPrincipalName=", "^/deviceAppManagement/mobileApps/graph\\.", "^/admin/serviceAnnouncement/healthOverviews/\\{serviceHealth-id\\}/issues(/|$)"] }
+    {
+      "why": "Needs a signed-in user; this spec serves app-only callers",
+      "patterns": [
+        "^/me(/|$|\\()",
+        "filterByCurrentUser\\(on="
+      ]
+    },
+    {
+      "why": "List operations accept $count",
+      "patterns": [
+        "/\\$count$"
+      ]
+    },
+    {
+      "why": "Excel cell, chart and table editing; no admin use",
+      "patterns": [
+        "/workbook(?=/|\\(|$)"
+      ]
+    },
+    {
+      "why": "Copies of /sites and /teams, which remain",
+      "patterns": [
+        "^/groups/\\{group-id\\}/sites/\\{site-id\\}(/|$)",
+        "^/groups/\\{group-id\\}/team/",
+        "^/teams/\\{team-id\\}/primaryChannel/"
+      ]
+    },
+    {
+      "why": "OneNote editing; no admin use",
+      "patterns": [
+        "^/groups/\\{group-id\\}/onenote(/|$)",
+        "^/sites/\\{site-id\\}(/getByPath\\(path='\\{path\\}'\\))?/onenote(/|$)",
+        "^/users/\\{user-id\\}/onenote(/|$)"
+      ]
+    },
+    {
+      "why": "Plural copy of the default termStore paths, which remain",
+      "patterns": [
+        "^/sites/\\{site-id\\}(/getByPath\\(path='\\{path\\}'\\))?/termStores(/|$)"
+      ]
+    },
+    {
+      "why": "Nested entitlement management copies; top-level paths remain",
+      "patterns": [
+        "^/identityGovernance/entitlementManagement/.*/resource/",
+        "^/identityGovernance/entitlementManagement/resourceRequests/\\{[^}]+\\}/catalog/",
+        "^/identityGovernance/entitlementManagement/(catalogs|resourceEnvironments)/\\{[^}]+\\}/resources/\\{[^}]+\\}/(roles|scopes|uploadSessions|environment|externalOriginResourceConnector|refresh)(/|$)",
+        "^/identityGovernance/catalogs(/|$)"
+      ]
+    },
+    {
+      "why": "Nested lifecycle workflow copies; canonical task paths remain",
+      "patterns": [
+        "^/identityGovernance/lifecycleWorkflows/.*/taskProcessingResults/\\{taskProcessingResult-id\\}/(subject|task)(/|$)",
+        "^/identityGovernance/lifecycleWorkflows/.*/taskReports/\\{taskReport-id\\}/(task|taskDefinition|taskProcessingResults)(/|$)"
+      ]
+    },
+    {
+      "why": "Deep user navigation; read the id, then use /users/{id}",
+      "patterns": [
+        "/(createdByUser|lastModifiedByUser)(/|$)",
+        "/(createdBy|lastModifiedBy)/"
+      ]
+    },
+    {
+      "why": "Out of scope for tenant administration",
+      "patterns": [
+        "^/education(/|$)",
+        "^/employeeExperience(/|$)",
+        "^/users/\\{user-id\\}/employeeExperience(/|$)",
+        "^/users/\\{user-id\\}/(todo|activities|insights|cloudClipboard)(/|$)"
+      ]
+    },
+    {
+      "why": "Retired, deprecated or separately licensed",
+      "patterns": [
+        "^/deviceAppManagement/(mdm)?[Ww]indowsInformationProtectionPolicies|^/deviceManagement/windowsInformationProtection(AppLearning|NetworkLearning)Summaries",
+        "^/security/threatIntelligence/(articles|articleIndicators)(/|$)",
+        "^/security/alerts(/|$)",
+        "^/reports/getSkypeForBusiness",
+        "^/identityProviders(/|$)"
+      ]
+    },
+    {
+      "why": "Aliases of paths that remain",
+      "patterns": [
+        "^/policies/conditionalAccessPolicies(/|$)",
+        "^/identity/conditionalAccess/authenticationStrength/policies(/|$)",
+        "^/users\\(userPrincipalName=",
+        "^/devices\\(deviceId=",
+        "/assignedUsers\\(userPrincipalName=",
+        "^/deviceAppManagement/mobileApps/graph\\.",
+        "^/admin/serviceAnnouncement/healthOverviews/\\{serviceHealth-id\\}/issues(/|$)"
+      ]
+    }
   ],
   "mustKeep": [
-    "/users", "/users/{user-id}", "/users/{user-id}/revokeSignInSessions", "/users/{user-id}/mailFolders/{mailFolder-id}/messageRules", "/users/{user-id}/mailboxSettings", "/users/{user-id}/messages", "/users/{user-id}/authentication/methods", "/users/{user-id}/assignLicense", "/users/{user-id}/licenseDetails", "/users/{user-id}/memberOf", "/users/{user-id}/oauth2PermissionGrants", "/users/{user-id}/drive", "/users/{user-id}/calendar",
-    "/groups", "/groups/{group-id}/members/$ref", "/groups/{group-id}/owners/$ref", "/groups/{group-id}/team", "/groups/{group-id}/sites", "/groups/{group-id}/events", "/groups/{group-id}/calendarView",
-    "/applications", "/applications/{application-id}/addPassword", "/servicePrincipals", "/servicePrincipals/{servicePrincipal-id}/addTokenSigningCertificate", "/servicePrincipals/{servicePrincipal-id}/appRoleAssignments", "/oauth2PermissionGrants",
-    "/directoryRoles", "/roleManagement/directory/roleAssignments", "/roleManagement/directory/roleEligibilityScheduleInstances", "/auditLogs/signIns", "/auditLogs/directoryAudits",
-    "/security/alerts_v2", "/security/incidents", "/security/microsoft.graph.security.runHuntingQuery", "/security/secureScores", "/security/collaboration/analyzedEmails/microsoft.graph.security.remediate",
-    "/identityProtection/riskyUsers", "/identityProtection/riskyUsers/confirmCompromised", "/identity/conditionalAccess/policies", "/policies/authenticationStrengthPolicies", "/identityGovernance/accessReviews/definitions", "/identityGovernance/accessReviews/unified/definitions",
-    "/subscribedSkus", "/organization", "/domains", "/teams", "/teams/{team-id}/channels", "/teams/{team-id}/members", "/teams/{team-id}/primaryChannel",
-    "/sites", "/sites/{site-id}/permissions", "/sites/{site-id}/lists", "/sites/{site-id}/termStore", "/drives/{drive-id}/items/{driveItem-id}/permissions", "/drives/{drive-id}/items/{driveItem-id}/versions", "/drives/{drive-id}/items/{driveItem-id}/restore",
-    "/deviceManagement/managedDevices", "/deviceManagement/applePushNotificationCertificate", "/deviceManagement/deviceCompliancePolicies", "/deviceAppManagement/mobileApps", "/devices",
-    "/admin/serviceAnnouncement/issues", "/admin/exchange/tracing/messageTraces", "/reports/getOffice365ActiveUserDetail(period='{period}')",
-    "/print/printers", "/external/connections", "/solutions/bookingBusinesses", "/solutions/virtualEvents/webinars", "/search/bookmarks"
+    "/users",
+    "/users/{user-id}",
+    "/users/{user-id}/revokeSignInSessions",
+    "/users/{user-id}/mailFolders/{mailFolder-id}/messageRules",
+    "/users/{user-id}/mailboxSettings",
+    "/users/{user-id}/messages",
+    "/users/{user-id}/authentication/methods",
+    "/users/{user-id}/assignLicense",
+    "/users/{user-id}/licenseDetails",
+    "/users/{user-id}/memberOf",
+    "/users/{user-id}/oauth2PermissionGrants",
+    "/users/{user-id}/drive",
+    "/users/{user-id}/calendar",
+    "/groups",
+    "/groups/{group-id}/members/$ref",
+    "/groups/{group-id}/owners/$ref",
+    "/groups/{group-id}/team",
+    "/groups/{group-id}/sites",
+    "/groups/{group-id}/events",
+    "/groups/{group-id}/calendarView",
+    "/applications",
+    "/applications/{application-id}/addPassword",
+    "/servicePrincipals",
+    "/servicePrincipals/{servicePrincipal-id}/addTokenSigningCertificate",
+    "/servicePrincipals/{servicePrincipal-id}/appRoleAssignments",
+    "/oauth2PermissionGrants",
+    "/directoryRoles",
+    "/roleManagement/directory/roleAssignments",
+    "/roleManagement/directory/roleEligibilityScheduleInstances",
+    "/auditLogs/signIns",
+    "/auditLogs/directoryAudits",
+    "/security/alerts_v2",
+    "/security/incidents",
+    "/security/microsoft.graph.security.runHuntingQuery",
+    "/security/secureScores",
+    "/security/collaboration/analyzedEmails/microsoft.graph.security.remediate",
+    "/identityProtection/riskyUsers",
+    "/identityProtection/riskyUsers/confirmCompromised",
+    "/identity/conditionalAccess/policies",
+    "/policies/authenticationStrengthPolicies",
+    "/identityGovernance/accessReviews/definitions",
+    "/identityGovernance/accessReviews/unified/definitions",
+    "/subscribedSkus",
+    "/organization",
+    "/domains",
+    "/teams",
+    "/teams/{team-id}/channels",
+    "/teams/{team-id}/members",
+    "/teams/{team-id}/primaryChannel",
+    "/sites",
+    "/sites/{site-id}/permissions",
+    "/sites/{site-id}/lists",
+    "/sites/{site-id}/termStore",
+    "/drives/{drive-id}/items/{driveItem-id}/permissions",
+    "/drives/{drive-id}/items/{driveItem-id}/versions",
+    "/drives/{drive-id}/items/{driveItem-id}/restore",
+    "/deviceManagement/managedDevices",
+    "/deviceManagement/applePushNotificationCertificate",
+    "/deviceManagement/deviceCompliancePolicies",
+    "/deviceAppManagement/mobileApps",
+    "/devices",
+    "/admin/serviceAnnouncement/issues",
+    "/admin/exchange/tracing/messageTraces",
+    "/reports/getOffice365ActiveUserDetail(period='{period}')",
+    "/print/printers",
+    "/external/connections",
+    "/solutions/bookingBusinesses",
+    "/solutions/virtualEvents/webinars",
+    "/search/bookmarks"
+  ],
+  "excludeOperations": [
+    {
+      "why": "Returns a new Temporary Access Pass in the response, which would put the pass in the agent's context. manage.security.restoreAccount issues passes as one-time links instead.",
+      "operations": [
+        {
+          "method": "post",
+          "path": "/users/{user-id}/authentication/temporaryAccessPassMethods"
+        }
+      ]
+    }
   ]
 }

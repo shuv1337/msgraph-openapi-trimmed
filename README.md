@@ -4,7 +4,7 @@ A filtered JSON copy of the Microsoft Graph v1.0 OpenAPI description, for app-on
 
 | | Source | This copy |
 | --- | ---: | ---: |
-| Operations | 18,004 | 8,554 |
+| Operations | 18,004 | 8,553 |
 | Format | YAML, 44.8 MB | JSON, 15.7 MB |
 
 - `v1.0/openapi.json` is the spec. Pin to a commit, not `main`.
@@ -14,6 +14,8 @@ A filtered JSON copy of the Microsoft Graph v1.0 OpenAPI description, for app-on
 Removed paths need a signed-in user, are out of scope for administration, are retired, or duplicate a path that remains.
 
 Microsoft marks `@odata.type` required on every entity schema. Graph needs it only to choose a derived type, so this copy drops that one requirement and request bodies validate without it.
+
+`exclusions.json` also lists single operations removed because their response hands a fresh credential to the caller, such as creating a Temporary Access Pass.
 
 ## Rebuild
 
